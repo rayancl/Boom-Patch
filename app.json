@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Boom Patch",
+    "slug": "boom-patch",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1b4332"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "output": "static"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "splash": {
+      "backgroundColor": "#ffffff"
+    }
+  }
+}
