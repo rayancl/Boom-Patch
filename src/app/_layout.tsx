@@ -1,10 +1,11 @@
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import { useColorScheme } from 'react-native';
 
-export default function Layout() {
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
+
   return (
-    <>
-      <StatusBar style="dark" />
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack
         screenOptions={{
           headerStyle: { backgroundColor: '#fff' },
@@ -13,9 +14,9 @@ export default function Layout() {
         }}
       >
         <Stack.Screen name="index" options={{ title: 'Boom Patch' }} />
-        <Stack.Screen name="detalhe" options={{ title: 'Detalhes do Campeonato' }} />
+        <Stack.Screen name="detalhe/[id]" options={{ title: 'Detalhes do Campeonato' }} />
         <Stack.Screen name="adicionar" options={{ title: 'Novo Campeonato', presentation: 'modal' }} />
       </Stack>
-    </>
+    </ThemeProvider>
   );
 }

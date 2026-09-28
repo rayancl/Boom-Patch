@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from 'expo-router';
-import { carregarCampeonatos, Campeonato } from '../lib/storage';
+import { carregarCampeonatos, Campeonato } from '@/lib/storage';
 
 export default function ListaScreen() {
   const [campeonatos, setCampeonatos] = useState<Campeonato[]>([]);
@@ -27,12 +27,17 @@ export default function ListaScreen() {
           <Pressable
             style={styles.item}
             onPress={() =>
-              router.push({ pathname: '/detalhe', params: { id: item.id } })
+              router.push({ pathname: '/detalhe/[id]', params: { id: item.id } })
             }
           >
             <View style={styles.itemHeader}>
               <Text style={styles.itemNome}>{item.nome}</Text>
-              <View style={[styles.statusBadge, item.status === 'Em andamento' && styles.statusAtivo]}>
+              <View
+                style={[
+                  styles.statusBadge,
+                  item.status === 'Em andamento' && styles.statusAtivo,
+                ]}
+              >
                 <Text style={styles.statusTexto}>{item.status}</Text>
               </View>
             </View>

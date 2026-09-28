@@ -1,8 +1,8 @@
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useFocusEffect } from 'expo-router';
-import { buscarCampeonato, Campeonato } from '../../lib/storage';
+import { buscarCampeonato, Campeonato } from '@/lib/storage';
 
 export default function DetalheScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();

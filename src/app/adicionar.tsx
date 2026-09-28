@@ -10,7 +10,7 @@ import {
   Text,
   TextInput,
 } from 'react-native';
-import { adicionarCampeonato } from '../lib/storage';
+import { adicionarCampeonato } from '@/lib/storage';
 
 export default function AdicionarScreen() {
   const [nome, setNome] = useState('');

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { campeonatosIniciais, Campeonato } from '../data/campeonatos';
+import { campeonatosIniciais, Campeonato } from '@/data/campeonatos';
 
 const STORAGE_KEY = '@boom-patch:campeonatos';
 
