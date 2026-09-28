@@ -1,98 +1,135 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useFocusEffect } from 'expo-router';
+import { carregarCampeonatos, Campeonato } from '@/lib/storage';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+export default function ListaScreen() {
+  const [campeonatos, setCampeonatos] = useState<Campeonato[]>([]);
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
+  // Recarrega a lista sempre que a tela ganha foco (depois de adicionar)
+  useFocusEffect(
+    useCallback(() => {
+      carregarCampeonatos().then(setCampeonatos);
+    }, [])
   );
-}
 
-export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <View style={styles.container}>
+      <FlatList
+        data={campeonatos}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContent}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>Nenhum campeonato cadastrado ainda.</Text>
+        }
+        renderItem={({ item }) => (
+          <Pressable
+            style={styles.item}
+            onPress={() =>
+              router.push({ pathname: '/detalhe/[id]', params: { id: item.id } })
+            }
+          >
+            <View style={styles.itemHeader}>
+              <Text style={styles.itemNome}>{item.nome}</Text>
+              <View
+                style={[
+                  styles.statusBadge,
+                  item.status === 'Em andamento' && styles.statusAtivo,
+                ]}
+              >
+                <Text style={styles.statusTexto}>{item.status}</Text>
+              </View>
+            </View>
+            <Text style={styles.itemInfo}>
+              {item.modalidade} · {item.qtdTimes} times
+            </Text>
+            <Text style={styles.itemData}>
+              {item.dataInicio} → {item.dataFim}
+            </Text>
+          </Pressable>
+        )}
+      />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <Pressable style={styles.addButton} onPress={() => router.push('/adicionar')}>
+        <Text style={styles.addButtonText}>+ Criar Campeonato</Text>
+      </Pressable>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: '#F2F7F4',
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  listContent: {
+    padding: 16,
+    gap: 12,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
+  emptyText: {
     textAlign: 'center',
+    color: '#666',
+    marginTop: 40,
+    fontSize: 16,
   },
-  code: {
-    textTransform: 'uppercase',
+  item: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#DCE8DF',
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  itemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  itemNome: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1C1C1E',
+    flex: 1,
+  },
+  statusBadge: {
+    backgroundColor: '#E2E8F0',
+    borderRadius: 999,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginLeft: 8,
+  },
+  statusAtivo: {
+    backgroundColor: '#BBF7D0',
+  },
+  statusTexto: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#14532D',
+  },
+  itemInfo: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 8,
+  },
+  itemData: {
+    fontSize: 13,
+    color: '#1B4332',
+    marginTop: 4,
+    fontWeight: '600',
+  },
+  addButton: {
+    position: 'absolute',
+    bottom: 24,
+    left: 16,
+    right: 16,
+    backgroundColor: '#1B4332',
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
   },
 });
