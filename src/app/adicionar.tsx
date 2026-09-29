@@ -27,6 +27,11 @@ export default function AdicionarScreen() {
       return;
     }
 
+    if (qtdTimes.trim() && isNaN(Number(qtdTimes))) {
+      Alert.alert('Valor inválido', 'A quantidade de times deve ser um número.');
+      return;
+    }
+
     // TAREFA (Aula 15): na Fase 3, migre o salvamento para SQLite.
     await adicionarCampeonato({
       nome: nome.trim(),
