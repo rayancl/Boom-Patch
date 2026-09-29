@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 /**
  * This script is used to reset the project to a blank state.
  * It deletes or moves the /src and /scripts directories to /example based on user input and creates a new /src/app directory with an index.tsx and _layout.tsx file.
