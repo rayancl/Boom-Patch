@@ -12,6 +12,7 @@ export type Campeonato = {
 
 export const campeonatosIniciais: Campeonato[] = [
   {
+
     id: '1',
     nome: 'Boom Cup Futsal',
     modalidade: 'Futsal',
