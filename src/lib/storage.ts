@@ -39,3 +39,20 @@ export async function buscarCampeonato(id: string): Promise<Campeonato | undefin
   const campeonatos = await carregarCampeonatos();
   return campeonatos.find((c) => c.id === id);
 }
+
+export async function atualizarStatusCampeonato(id: string, novoStatus: string): Promise<void> {
+  const campeonatos = await carregarCampeonatos();
+  const atualizados = campeonatos.map((c) => {
+    if (c.id === id) {
+      return { ...c, status: novoStatus };
+    }
+    return c;
+  });
+  await salvarCampeonatos(atualizados);
+}
+
+export async function deletarCampeonato(id: string): Promise<void> {
+  const campeonatos = await carregarCampeonatos();
+  const atualizados = campeonatos.filter((c) => c.id !== id);
+  await salvarCampeonatos(atualizados);
+}
