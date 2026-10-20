@@ -39,7 +39,6 @@ async function inserirDadosIniciais(
   if (!resultado || resultado.quantidade > 0) {
     return;
   }
-
   for (const campeonato of campeonatosIniciais) {
     await banco.runAsync(
       `
@@ -59,7 +58,6 @@ async function inserirDadosIniciais(
     );
   }
 }
-
 function converterCampeonato(
   linha: any
 ): Campeonato {
@@ -75,7 +73,6 @@ function converterCampeonato(
     times: JSON.parse(linha.times || '[]'),
   };
 }
-
 export async function carregarCampeonatos(): Promise<Campeonato[]> {
   try {
     const banco = await abrirBanco();
@@ -87,24 +84,20 @@ export async function carregarCampeonatos(): Promise<Campeonato[]> {
         ORDER BY id
       `
     );
-
     return linhas.map(converterCampeonato);
   } catch (erro) {
     console.error('Erro ao carregar campeonatos:', erro);
     return [];
   }
 }
-
 export async function adicionarCampeonato(
   novoCampeonato: Omit<Campeonato, 'id'>
 ): Promise<Campeonato[]> {
   const banco = await abrirBanco();
-
   const campeonatoComId: Campeonato = {
     ...novoCampeonato,
     id: String(Date.now()),
   };
-
   await banco.runAsync(
     `
       INSERT INTO campeonatos
