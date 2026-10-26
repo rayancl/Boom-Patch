@@ -47,3 +47,18 @@ Procure pelos comentários `// TAREFA (Aula XX):` no código:
 - Rayan Costa Luz Lima
 - Vinicius Silva
 - João Paula
+
+---
+
+## Colaboração por integrante
+
+> *Excluídos: commits do professor Jackson Sá (wendelmax), `github-actions[bot]` e `dependabot[bot]`. Contagem com base em `git log --no-merges`.*
+
+| # | Integrante | Commits | Participação |
+|---|------------|---------|--------------|
+| 1 | viniciussilvaqueiroz110-beep | 5 | 35.7% ███████░░░░░░░░░░░░░ |
+| 2 | rayancl | 4 | 28.6% █████░░░░░░░░░░░░░░░ |
+| 3 | João Pedro | 4 | 28.6% █████░░░░░░░░░░░░░░░ |
+| 4 | RAYAN COSTA LUZ LIMA | 1 | 7.1% █░░░░░░░░░░░░░░░░░░░ |
+
+**Total de commits considerados:** 14
