@@ -1,12 +1,12 @@
 > Este arquivo e **gerado automaticamente** pelo CI a cada push na branch `main`.
 > Nao edite a mao: o proximo commit do CI sobrescreve. Para ver a rodada no Actions:
-> https://github.com/wendelmax/Boom-Patch/actions/workflows/pam-ci.yml
+> https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml
 
 ## Nota PAM I — TRP bentão (campeonatos)
 
 ![](https://img.shields.io/static/v1?label=Nota%20PAM%20I&message=MB&color=green)
 
-**Nota atual: MB** · 76% (42/55 pontos) · rodada de 2026-10-27 01:14:32 · commit `e344c78`
+**Nota atual: MB** · 76% (42/55 pontos) · rodada de 2026-10-27 01:10:23 · commit `18170d9`
 
 Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–75%) · MB = Muito bom (75–100%)
 
