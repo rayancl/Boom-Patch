@@ -6,7 +6,7 @@
 
 ![](https://img.shields.io/static/v1?label=Nota%20PAM%20I&message=MB&color=green)
 
-**Nota atual: MB** · 76% (42/55 pontos) · rodada de 2026-10-28 13:22:53 · commit `d1ab91c`
+**Nota atual: MB** · 80% (44/55 pontos) · rodada de 2026-10-28 17:18:50 · commit `942db8b`
 
 Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–75%) · MB = Muito bom (75–100%)
 
@@ -14,7 +14,7 @@ Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–7
 |---|---|---|
 | Fase 1 — Estrutura | 9/10 | em desenvolvimento |
 | Fase 2 — AsyncStorage | 11/15 | em desenvolvimento |
-| Fase 3 — SQLite | 22/30 | em desenvolvimento |
+| Fase 3 — SQLite | 24/30 | em desenvolvimento |
 
 ## Checklist validado
 
@@ -49,11 +49,11 @@ Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–7
 - [ ] **(+1 pts)** Dados iniciais/seed são gravados na 1ª execução — `—`
 - [x] **(+1 pts)** Formulário valida campos (trim/length/vazio) — `src/app/adicionar.tsx`
 
-### Fase 3 — Banco de dados SQLite (22/30 pts)
+### Fase 3 — Banco de dados SQLite (24/30 pts)
 
 - [x] **(+2x2 pts)** Dependência expo-sqlite está no package.json — `no package.json`
 - [x] **(+2x2 pts)** Existe import do expo-sqlite — `src/lib/storage.ts`
-- [ ] **(+2x2 pts)** Existe arquivo de banco de dados — `—`
+- [x] **(+2x2 pts)** Existe arquivo de banco de dados — `src/lib/database.ts`
 - [x] **(+2x2 pts)** Cria a tabela com CREATE TABLE IF NOT EXISTS — `src/lib/storage.ts`
 - [x] **(+2x2 pts)** Insere dados com INSERT INTO — `src/lib/storage.ts`
 - [x] **(+2x2 pts)** Consulta com SELECT — `src/components/themed-text.tsx`
