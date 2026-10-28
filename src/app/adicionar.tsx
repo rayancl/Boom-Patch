@@ -44,7 +44,7 @@ export default function AdicionarScreen() {
       times: [],
     });
 
-    Alert.alert('Campeonato criado!', 'Campeonato salvo no AsyncStorage.');
+    Alert.alert('Campeonato criado!', 'Campeonato salvo no banco de dados.');
     router.back();
   };
 
