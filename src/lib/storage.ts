@@ -1,33 +1,5 @@
-import * as SQLite from 'expo-sqlite';
+import { abrirBanco } from './database';
 import { campeonatosIniciais, Campeonato } from '@/data/campeonatos';
-
-let db: SQLite.SQLiteDatabase | null = null;
-
-async function abrirBanco(): Promise<SQLite.SQLiteDatabase> {
-  if (db) {
-    return db;
-  }
-
-  db = await SQLite.openDatabaseAsync('boom_patch.db');
-
-  await db.execAsync(`
-    CREATE TABLE IF NOT EXISTS campeonatos (
-      id TEXT PRIMARY KEY NOT NULL,
-      nome TEXT NOT NULL,
-      modalidade TEXT NOT NULL,
-      dataInicio TEXT NOT NULL,
-      dataFim TEXT NOT NULL,
-      qtdTimes INTEGER NOT NULL,
-      local TEXT NOT NULL,
-      status TEXT NOT NULL,
-      times TEXT NOT NULL
-    );
-  `);
-
-  await inserirDadosIniciais(db);
-
-  return db;
-}
 
 async function inserirDadosIniciais(
   banco: SQLite.SQLiteDatabase
