@@ -8,23 +8,27 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
-import { carregarCampeonatos, deletarCampeonato, Campeonato } from '@/lib/storage';
+import { buscarCampeonato, deletarCampeonato, Campeonato } from '@/lib/storage';
 
 export default function DetalheScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [campeonato, setCampeonato] = useState<Campeonato | null>(null);
 
   useEffect(() => {
-    const buscarDetalhes = async () => {
-      const dados = await carregarCampeonatos();
-      const encontrado = dados.find((item) => String(item.id) === String(id));
+  const buscarDetalhes = async () => {
+    try {
+      const encontrado = await buscarCampeonato(String(id));
+
       if (encontrado) {
         setCampeonato(encontrado);
       }
-    };
-    buscarDetalhes();
-  }, [id]);
+    } catch (error) {
+      console.error('Erro ao buscar campeonato:', error);
+    }
+  };
 
+  buscarDetalhes();
+}, [id]);
   const handleExcluir = () => {
     Alert.alert(
       'Excluir Campeonato',
