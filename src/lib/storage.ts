@@ -1,6 +1,9 @@
+
+import * as SQLite from 'expo-sqlite';
 import { abrirBanco } from './database';
 import { campeonatosIniciais, Campeonato } from '@/data/campeonatos';
 
+// Insere os campeonatos iniciais somente se o banco estiver vazio
 async function inserirDadosIniciais(
   banco: SQLite.SQLiteDatabase
 ): Promise<void> {
@@ -8,28 +11,31 @@ async function inserirDadosIniciais(
     'SELECT COUNT(*) as quantidade FROM campeonatos'
   );
 
-  if (!resultado || resultado.quantidade > 0) {
+  if (resultado && resultado.quantidade > 0) {
     return;
   }
-  for (const campeonato of campeonatosIniciais) {
-    await banco.runAsync(
-      `
-        INSERT INTO campeonatos
+
+  await banco.withTransactionAsync(async () => {
+    for (const campeonato of campeonatosIniciais) {
+      await banco.runAsync(
+        `INSERT INTO campeonatos
         (id, nome, modalidade, dataInicio, dataFim, qtdTimes, local, status, times)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `,
-      campeonato.id,
-      campeonato.nome,
-      campeonato.modalidade,
-      campeonato.dataInicio,
-      campeonato.dataFim,
-      campeonato.qtdTimes,
-      campeonato.local,
-      campeonato.status,
-      JSON.stringify(campeonato.times)
-    );
-  }
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        campeonato.id,
+        campeonato.nome,
+        campeonato.modalidade,
+        campeonato.dataInicio,
+        campeonato.dataFim,
+        campeonato.qtdTimes,
+        campeonato.local,
+        campeonato.status,
+        JSON.stringify(campeonato.times)
+      );
+    }
+  });
 }
+
+// Converte os dados do SQLite para o formato utilizado pelo aplicativo
 function converterCampeonato(
   linha: any
 ): Campeonato {
@@ -46,6 +52,7 @@ function converterCampeonato(
   };
 }
 
+// LISTAR campeonatos
 export async function carregarCampeonatos(): Promise<Campeonato[]> {
   const banco = await abrirBanco();
 
@@ -62,14 +69,17 @@ export async function carregarCampeonatos(): Promise<Campeonato[]> {
   return linhas.map(converterCampeonato);
 }
 
+// ADICIONAR campeonato
 export async function adicionarCampeonato(
   novoCampeonato: Omit<Campeonato, 'id'>
 ): Promise<Campeonato[]> {
   const banco = await abrirBanco();
+
   const campeonatoComId: Campeonato = {
     ...novoCampeonato,
     id: String(Date.now()),
   };
+
   await banco.runAsync(
     `
       INSERT INTO campeonatos
@@ -90,6 +100,7 @@ export async function adicionarCampeonato(
   return carregarCampeonatos();
 }
 
+// BUSCAR campeonato pelo ID
 export async function buscarCampeonato(
   id: string
 ): Promise<Campeonato | undefined> {
@@ -111,6 +122,7 @@ export async function buscarCampeonato(
   return converterCampeonato(linha);
 }
 
+// ATUALIZAR somente o status
 export async function atualizarStatusCampeonato(
   id: string,
   novoStatus: string
@@ -128,6 +140,7 @@ export async function atualizarStatusCampeonato(
   );
 }
 
+// EDITAR campeonato completo
 export async function atualizarCampeonato(
   campeonato: Campeonato
 ): Promise<void> {
@@ -159,6 +172,7 @@ export async function atualizarCampeonato(
   );
 }
 
+// EXCLUIR campeonato
 export async function deletarCampeonato(
   id: string
 ): Promise<void> {
@@ -173,4 +187,5 @@ export async function deletarCampeonato(
   );
 }
 
+// Exporta o tipo utilizado nas telas
 export type { Campeonato };
