@@ -6,7 +6,7 @@
 
 ![](https://img.shields.io/static/v1?label=Nota%20PAM%20I&message=MB&color=green)
 
-**Nota atual: MB** · 80% (44/55 pontos) · rodada de 2026-10-28 17:20:50 · commit `3c959ab`
+**Nota atual: MB** · 80% (44/55 pontos) · rodada de 2026-11-05 13:26:32 · commit `f71ce1d`
 
 Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–75%) · MB = Muito bom (75–100%)
 
@@ -38,7 +38,7 @@ Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–7
 - [ ] **(+1 pts)** Storage faz leitura com AsyncStorage.getItem — `—`
 - [ ] **(+1 pts)** Storage grava com AsyncStorage.setItem — `—`
 - [x] **(+1 pts)** Existe função de CARREGAR a lista (carregar/load) — `src/app/detalhe/[id].tsx`
-- [x] **(+1 pts)** Existe função de ADICIONAR/CADASTRAR — `src/app/_layout.tsx`
+- [x] **(+1 pts)** Existe função de ADICIONAR/CADASTRAR — `src/app/adicionar.tsx`
 - [x] **(+1 pts)** Existe busca por id (buscar/find/getItem) — `src/app/detalhe/[id].tsx`
 - [x] **(+1 pts)** Existe função de EXCLUIR/remover — `src/app/detalhe/[id].tsx`
 - [x] **(+1 pts)** Formulário lê entradas com TextInput — `src/app/adicionar.tsx`
