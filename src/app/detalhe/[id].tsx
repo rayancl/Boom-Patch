@@ -1,106 +1,204 @@
-import { useLocalSearchParams, router } from 'expo-router';
-import { useEffect, useState } from 'react';
+
+import { router, useLocalSearchParams, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
+
 import {
+  ActivityIndicator,
+  Alert,
+  Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  Pressable,
-  Alert,
-  ScrollView,
 } from 'react-native';
-import { buscarCampeonato, deletarCampeonato, Campeonato } from '@/lib/storage';
+
+import {
+  buscarCampeonato,
+  deletarCampeonato,
+  Campeonato,
+} from '@/lib/storage';
 
 export default function DetalheScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
+
   const [campeonato, setCampeonato] = useState<Campeonato | null>(null);
+  const [carregando, setCarregando] = useState(true);
+  const [excluindo, setExcluindo] = useState(false);
+  const [erro, setErro] = useState('');
 
-  useEffect(() => {
-  const buscarDetalhes = async () => {
+  const carregar = useCallback(async () => {
+    setCarregando(true);
+    setErro('');
+
     try {
-      const encontrado = await buscarCampeonato(String(id));
+      const dados = await buscarCampeonato(String(id));
 
-      if (encontrado) {
-        setCampeonato(encontrado);
+      if (!dados) {
+        setCampeonato(null);
+        setErro('Campeonato não encontrado.');
+      } else {
+        setCampeonato(dados);
       }
     } catch (error) {
       console.error('Erro ao buscar campeonato:', error);
+      setErro('Não foi possível carregar os dados. Tente novamente.');
+    } finally {
+      setCarregando(false);
     }
+  }, [id]);
+
+  useFocusEffect(
+    useCallback(() => {
+      carregar();
+    }, [carregar])
+  );
+
+  const editar = () => {
+    router.push({
+      pathname: '/adicionar',
+      params: { id: String(id) },
+    });
   };
 
-  buscarDetalhes();
-}, [id]);
-  const handleExcluir = () => {
+  const excluir = () => {
     Alert.alert(
-      'Excluir Campeonato',
-      'Tem certeza que deseja excluir este campeonato? Esta ação não pode ser desfeita.',
+      'Excluir campeonato',
+      'Tem certeza de que deseja excluir este campeonato? Essa ação não poderá ser desfeita.',
       [
-        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
         {
           text: 'Excluir',
           style: 'destructive',
-          onPress: async () => {
-            try {
-              await deletarCampeonato(String(id));
-              router.back();
-            } catch (error) {
-              Alert.alert('Erro', 'Não foi possível excluir o campeonato.');
-            }
-          },
+          onPress: confirmarExclusao,
         },
       ]
     );
   };
 
-  const handleEditar = () => {
-    router.push({
-      pathname: '/adicionar',
-      params: { id },
-    });
+  const confirmarExclusao = async () => {
+    if (excluindo) return;
+
+    setExcluindo(true);
+
+    try {
+      await deletarCampeonato(String(id));
+
+      Alert.alert(
+        'Campeonato excluído',
+        'O campeonato foi removido com sucesso.',
+        [
+          {
+            text: 'OK',
+            onPress: () => router.replace('/'),
+          },
+        ]
+      );
+    } catch (error) {
+      console.error('Erro ao excluir campeonato:', error);
+
+      Alert.alert(
+        'Erro ao excluir',
+        'Não foi possível excluir o campeonato. Tente novamente.'
+      );
+    } finally {
+      setExcluindo(false);
+    }
   };
 
-  if (!campeonato) {
+  if (carregando) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.loadingText}>Carregando detalhes...</Text>
+      <View style={styles.estado}>
+        <ActivityIndicator size="large" color="#1B4332" />
+        <Text style={styles.estadoTexto}>
+          Carregando campeonato...
+        </Text>
+      </View>
+    );
+  }
+
+  if (erro || !campeonato) {
+    return (
+      <View style={styles.estado}>
+        <Text style={styles.icone}>⚠️</Text>
+        <Text style={styles.titulo}>Ops!</Text>
+        <Text style={styles.estadoTexto}>
+          {erro || 'Campeonato não encontrado.'}
+        </Text>
+
+        <Pressable style={styles.botao} onPress={carregar}>
+          <Text style={styles.botaoTexto}>Tentar novamente</Text>
+        </Pressable>
+
+        <Pressable
+          style={styles.botaoCancelar}
+          onPress={() => router.replace('/')}
+        >
+          <Text style={styles.botaoCancelarTexto}>Voltar</Text>
+        </Pressable>
       </View>
     );
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.nome}>{campeonato.nome}</Text>
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>{campeonato.status}</Text>
-        </View>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+    >
+      <Text style={styles.titulo}>{campeonato.nome}</Text>
 
-        <Text style={styles.label}>Modalidade:</Text>
+      <View style={styles.card}>
+        <Text style={styles.label}>Modalidade</Text>
         <Text style={styles.valor}>{campeonato.modalidade}</Text>
 
-        <Text style={styles.label}>Quantidade de Times:</Text>
+        <Text style={styles.label}>Status</Text>
+        <Text style={styles.valor}>{campeonato.status}</Text>
+
+        <Text style={styles.label}>Data de início</Text>
+        <Text style={styles.valor}>{campeonato.dataInicio}</Text>
+
+        <Text style={styles.label}>Data de encerramento</Text>
+        <Text style={styles.valor}>{campeonato.dataFim}</Text>
+
+        <Text style={styles.label}>Quantidade de times</Text>
         <Text style={styles.valor}>{campeonato.qtdTimes}</Text>
 
-        <Text style={styles.label}>Período:</Text>
-        <Text style={styles.valor}>
-          {campeonato.dataInicio} até {campeonato.dataFim}
-        </Text>
-
-        <Text style={styles.label}>Local:</Text>
-        <Text style={styles.valor}>📍 {campeonato.local}</Text>
+        <Text style={styles.label}>Local</Text>
+        <Text style={styles.valor}>{campeonato.local}</Text>
       </View>
 
-      <View style={styles.actionsContainer}>
-        <Pressable style={[styles.button, styles.editButton]} onPress={handleEditar}>
-          <Text style={styles.buttonText}>Editar</Text>
-        </Pressable>
+      <View style={styles.card}>
+        <Text style={styles.subtitulo}>Times participantes</Text>
 
-        <Pressable style={[styles.button, styles.deleteButton]} onPress={handleExcluir}>
-          <Text style={styles.buttonText}>Excluir</Text>
-        </Pressable>
+        {campeonato.times?.length ? (
+          campeonato.times.map((time, index) => (
+            <Text key={index} style={styles.time}>
+              • {typeof time === 'string' ? time : time.nome}
+            </Text>
+          ))
+        ) : (
+          <Text style={styles.estadoTexto}>
+            Nenhum time cadastrado ainda.
+          </Text>
+        )}
       </View>
 
-      <Pressable style={styles.backButton} onPress={() => router.back()}>
-        <Text style={styles.backButtonText}>Voltar para a Lista</Text>
+      <Pressable style={styles.botao} onPress={editar}>
+        <Text style={styles.botaoTexto}>✏️ Editar campeonato</Text>
+      </Pressable>
+
+      <Pressable
+        style={[styles.botaoExcluir, excluindo && styles.desabilitado]}
+        onPress={excluir}
+        disabled={excluindo}
+      >
+        {excluindo ? (
+          <ActivityIndicator color="#FFFFFF" />
+        ) : (
+          <Text style={styles.botaoTexto}>🗑️ Excluir campeonato</Text>
+        )}
       </Pressable>
     </ScrollView>
   );
@@ -108,85 +206,94 @@ export default function DetalheScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     backgroundColor: '#F2F7F4',
+  },
+  content: {
     padding: 16,
+    paddingBottom: 40,
   },
-  loadingText: {
-    textAlign: 'center',
-    marginTop: 40,
-    fontSize: 16,
+  estado: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+    backgroundColor: '#F2F7F4',
+  },
+  icone: {
+    fontSize: 40,
+    marginBottom: 12,
+  },
+  estadoTexto: {
+    fontSize: 15,
     color: '#666',
+    marginTop: 10,
+    textAlign: 'center',
   },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#DCE8DF',
-    marginBottom: 20,
-  },
-  nome: {
-    fontSize: 22,
+  titulo: {
+    fontSize: 25,
     fontWeight: '700',
-    color: '#1C1C1E',
-    marginBottom: 8,
-  },
-  badge: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#BBF7D0',
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    color: '#1B4332',
     marginBottom: 16,
   },
-  badgeText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#14532D',
+  subtitulo: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#1B4332',
+    marginBottom: 12,
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 18,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#DCE8DF',
   },
   label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#555',
+    fontSize: 13,
+    color: '#777',
     marginTop: 12,
   },
   valor: {
     fontSize: 16,
-    color: '#1C1C1E',
-    marginTop: 2,
+    fontWeight: '600',
+    color: '#222',
+    marginTop: 4,
   },
-  actionsContainer: {
-    flexDirection: 'row',
-    gap: 12,
-    marginBottom: 12,
+  time: {
+    fontSize: 15,
+    color: '#444',
+    marginBottom: 8,
   },
-  button: {
-    flex: 1,
+  botao: {
+    backgroundColor: '#1B4332',
+    padding: 16,
     borderRadius: 12,
-    paddingVertical: 14,
     alignItems: 'center',
+    marginTop: 8,
   },
-  editButton: {
-    backgroundColor: '#2563EB',
-  },
-  deleteButton: {
-    backgroundColor: '#DC2626',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
+  botaoTexto: {
+    color: '#FFFFFF',
+    fontSize: 15,
     fontWeight: '700',
   },
-  backButton: {
-    backgroundColor: '#1B4332',
+  botaoExcluir: {
+    backgroundColor: '#B91C1C',
+    padding: 16,
     borderRadius: 12,
-    paddingVertical: 14,
     alignItems: 'center',
+    marginTop: 12,
   },
-  backButtonText: {
-    color: '#fff',
-    fontSize: 16,
+  desabilitado: {
+    opacity: 0.6,
+  },
+  botaoCancelar: {
+    padding: 14,
+    marginTop: 8,
+  },
+  botaoCancelarTexto: {
+    color: '#1B4332',
     fontWeight: '700',
   },
 });
