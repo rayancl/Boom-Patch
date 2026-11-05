@@ -45,23 +45,23 @@ function converterCampeonato(
     times: JSON.parse(linha.times || '[]'),
   };
 }
-export async function carregarCampeonatos(): Promise<Campeonato[]> {
-  try {
-    const banco = await abrirBanco();
 
-    const linhas = await banco.getAllAsync(
-      `
-        SELECT *
-        FROM campeonatos
-        ORDER BY id
-      `
-    );
-    return linhas.map(converterCampeonato);
-  } catch (erro) {
-    console.error('Erro ao carregar campeonatos:', erro);
-    return [];
-  }
+export async function carregarCampeonatos(): Promise<Campeonato[]> {
+  const banco = await abrirBanco();
+
+  await inserirDadosIniciais(banco);
+
+  const linhas = await banco.getAllAsync(
+    `
+      SELECT *
+      FROM campeonatos
+      ORDER BY id
+    `
+  );
+
+  return linhas.map(converterCampeonato);
 }
+
 export async function adicionarCampeonato(
   novoCampeonato: Omit<Campeonato, 'id'>
 ): Promise<Campeonato[]> {
