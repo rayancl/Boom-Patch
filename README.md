@@ -3,17 +3,18 @@
 <!-- PAM-CI-NOTA-INICIO -->
 ### Nota atual (automática) — TRP bentão (campeonatos)
 
-[![CI](https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml/badge.svg)](https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml) [![Nota](https://img.shields.io/badge/Nota%20PAM%20I-MB-green)](https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml)
+[![CI](https://github.com/ORG/REPO/actions/workflows/pam-ci.yml/badge.svg)](https://github.com/ORG/REPO/actions/workflows/pam-ci.yml) [![Nota](https://img.shields.io/badge/Nota%20PAM%20I-MB-green)](https://github.com/ORG/REPO/actions/workflows/pam-ci.yml)
 
-**MB** — Muito bom · **80%** (44/55 pontos) · atualizado em 2026-11-05 13:48
+**MB** — Muito bom · **91%** (91/100 pontos) · atualizado em 2026-11-10 01:29
 
 | Fase | Pontos |
 |------|--------|
-| Fase 1 — Estrutura | 9/10 |
-| Fase 2 — AsyncStorage | 11/15 |
-| Fase 3 — SQLite | 24/30 |
+| Fase 1 — Estrutura | 10/10 |
+| Fase 2 — AsyncStorage | 15/15 |
+| Fase 3 — SQLite | 30/30 |
+| Fase 4 — Versão Final (UX e Dispositivo) | 36/45 |
 
-Checklist item a item em [NOTA.md](NOTA.md) · [ver a rodada mais recente no Actions](https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml)
+Checklist item a item em [NOTA.md](NOTA.md) · [ver a rodada mais recente no Actions](https://github.com/ORG/REPO/actions/workflows/pam-ci.yml)
 <!-- PAM-CI-NOTA-FIM -->
 
 <!-- PAM-CI-NOTA-INICIO -->
