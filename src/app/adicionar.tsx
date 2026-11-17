@@ -1,5 +1,6 @@
 
 import { router, useLocalSearchParams } from 'expo-router';
+import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
 
 import {
