@@ -6,13 +6,13 @@
 
 ![](https://img.shields.io/static/v1?label=Nota%20PAM%20I&message=MB&color=green)
 
-**Nota atual: MB** · 99% (99/100 pontos) · rodada de 2026-11-17 01:10:52 · commit `347d5bd`
+**Nota atual: MB** · 100% (100/100 pontos) · rodada de 2026-11-17 01:12:34 · commit `d6a5512`
 
 Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–75%) · MB = Muito bom (75–100%)
 
 | Fase | Peso | Pontos | Situação |
 |---|---|---|---|
-| Fase 1 — Estrutura | 1x (10 pts) | 9/10 | em desenvolvimento |
+| Fase 1 — Estrutura | 1x (10 pts) | 10/10 | completa |
 | Fase 2 — AsyncStorage | 1x (15 pts) | 15/15 | completa |
 | Fase 3 — SQLite | 2x (30 pts) | 30/30 | completa |
 | Fase 4 — Versão Final (SQLite + UX + Dispositivo) | 3x (45 pts) | 45/45 | completa |
@@ -29,7 +29,7 @@ Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–7
 
 ## Checklist validado
 
-### Fase 1 — Estrutura do projeto (9/10 pts · peso 1x)
+### Fase 1 — Estrutura do projeto (10/10 pts · peso 1x)
 
 - [x] **(+1 pts)** README.md existe e fala do projeto/grupo — `README.md`
 - [x] **(+1 pts)** Arquivo principal do app existe (src/app/_layout.tsx) — `src/app/_layout.tsx`
@@ -39,7 +39,7 @@ Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–7
 - [x] **(+1 pts)** Existe tela de FORMULÁRIO — `src/app/adicionar.tsx`
 - [x] **(+1 pts)** Existe tela de DETALHE — `src/app/detalhe/[id].tsx`
 - [x] **(+1 pts)** Dependências importadas existem no package.json (app não quebra ao abrir) — `todos os imports resolvem`
-- [ ] **(+1 pts)** app.json identifica o app (name/slug preenchidos) — `app.json`
+- [x] **(+1 pts)** app.json identifica o app (name/slug preenchidos) — `app.json`
 - [x] **(+1 pts)** Projeto tem pelo menos 2 arquivos de tela/código — `4 arquivos de tela`
 
 ### Fase 2 — Persistência com AsyncStorage (15/15 pts · peso 1x)
