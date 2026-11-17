@@ -24,6 +24,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+  "expo-location",
+  {
+    "locationWhenInUsePermission": "Permitir que o Boom Patch use sua localização para preencher o local do campeonato."
+  }
+]
       "expo-router",
       [
         "expo-splash-screen",
