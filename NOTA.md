@@ -6,7 +6,7 @@
 
 ![](https://img.shields.io/static/v1?label=Nota%20PAM%20I&message=MB&color=green)
 
-**Nota atual: MB** · 96% (96/100 pontos) · rodada de 2026-11-17 00:53:21 · commit `9554edf`
+**Nota atual: MB** · 99% (99/100 pontos) · rodada de 2026-11-17 01:09:08 · commit `3028174`
 
 Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–75%) · MB = Muito bom (75–100%)
 
@@ -15,7 +15,7 @@ Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–7
 | Fase 1 — Estrutura | 1x (10 pts) | 9/10 | em desenvolvimento |
 | Fase 2 — AsyncStorage | 1x (15 pts) | 15/15 | completa |
 | Fase 3 — SQLite | 2x (30 pts) | 30/30 | completa |
-| Fase 4 — Versão Final (SQLite + UX + Dispositivo) | 3x (45 pts) | 42/45 | em desenvolvimento |
+| Fase 4 — Versão Final (SQLite + UX + Dispositivo) | 3x (45 pts) | 45/45 | completa |
 
 ## Resumo dos Testes Funcionais (Execução Real em Runtime Node + SQLite)
 
@@ -78,7 +78,7 @@ Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–7
 - [x] **(+2 pts)** Usa async/await corretamente (mais de 2 await) — `src/app/adicionar.tsx`
 - [x] **(+2 pts)** Banco possui dados iniciais (seed inserido em SQL) — `src/lib/storage.ts`
 
-### Fase 4 — Versão Final: SQLite Exclusivo, UX, Dispositivo e Entrega (42/45 pts · peso 3x)
+### Fase 4 — Versão Final: SQLite Exclusivo, UX, Dispositivo e Entrega (45/45 pts · peso 3x)
 
 - [x] **(+3 pts)** SQLite exclusivo: fluxo das telas usa SQLite sem depender de AsyncStorage p/ dados críticos — `src/lib/database.ts (telas sem AsyncStorage crítico)`
 - [x] **(+3 pts)** [Teste Funcional SQLite] Banco abre e cria a(s) tabela(s) em memória (CREATE TABLE) — `Tabela(s) criada(s) no motor SQLite: campeonatos`
@@ -94,7 +94,7 @@ Legenda: I = Insuficiente (0–25%) · R = Regular (25–50%) · B = Bom (50–7
 - [x] **(+3 pts)** UX: Mensagem de erro amigável e validação se falhar ao SALVAR/EXCLUIR (try/catch + Alert/.trim) — `src/app/adicionar.tsx + validação .trim()`
 - [x] **(+3 pts)** Organização do código: separação em pastas por responsabilidade (screens/app, database/data, components) — `pastas: app, components, constants, data, hooks, lib`
 - [x] **(+3 pts)** Interface consistente: FlatList (keyExtractor + renderItem) e estilização StyleSheet.create — `src/app/index.tsx (10 arquivos com StyleSheet)`
-- [ ] **(+3 pts)** Entrega: repositório limpo (.gitignore sem node_modules) e README com instruções/Expo Go/APK — `FALTA .gitignore ou documentar como rodar/testar (Expo Go/APK) no README.md`
+- [x] **(+3 pts)** Entrega: repositório limpo (.gitignore sem node_modules) e README com instruções/Expo Go/APK — `README.md (39 linhas) + .gitignore`
 
 ## Para evoluir a nota
 

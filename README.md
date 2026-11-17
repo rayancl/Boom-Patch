@@ -5,14 +5,14 @@
 
 [![CI](https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml/badge.svg)](https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml) [![Nota](https://img.shields.io/badge/Nota%20PAM%20I-MB-green)](https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml)
 
-**MB** — Muito bom · **96%** (96/100 pontos) · atualizado em 2026-11-17 00:53
+**MB** — Muito bom · **99%** (99/100 pontos) · atualizado em 2026-11-17 01:09
 
 | Fase | Pontos |
 |------|--------|
 | Fase 1 — Estrutura | 9/10 |
 | Fase 2 — AsyncStorage | 15/15 |
 | Fase 3 — SQLite | 30/30 |
-| Fase 4 — Versão Final (UX e Dispositivo) | 42/45 |
+| Fase 4 — Versão Final (UX e Dispositivo) | 45/45 |
 
 Checklist item a item em [NOTA.md](NOTA.md) · [ver a rodada mais recente no Actions](https://github.com/rayancl/Boom-Patch/actions/workflows/pam-ci.yml)
 <!-- PAM-CI-NOTA-FIM -->
