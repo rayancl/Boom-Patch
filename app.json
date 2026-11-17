@@ -1,3 +1,4 @@
+
 {
   "expo": {
     "name": "Boom Patch",
@@ -23,26 +24,27 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": "plugins": [
-  [
-    "expo-location",
-    {
-      "locationWhenInUsePermission": "Permitir que o Boom Patch use sua localização para preencher o local do campeonato."
-    }
-  ],
-  "expo-router",
-  [
-    "expo-splash-screen",
-    {
-      "backgroundColor": "#208AEF",
-      "image": "./assets/images/splash-icon.png",
-      "imageWidth": 76
-    }
-  ]
-],
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Permitir que o Boom Patch use sua localização para preencher o local do campeonato."
+        }
+      ],
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#208AEF",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 76
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
     }
   }
 }
+
