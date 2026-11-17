@@ -24,6 +24,40 @@ import {
 } from '@/lib/storage';
 
 export default function AdicionarScreen() {
+  const [buscandoLocal, setBuscandoLocal] = useState(false);
+
+const usarLocalizacaoAtual = async () => {
+  if (buscandoLocal) return;
+
+  setBuscandoLocal(true);
+
+  try {
+    const permissao = await Location.requestForegroundPermissionsAsync();
+
+    if (permissao.status !== 'granted') {
+      Alert.alert(
+        'Permissão necessária',
+        'Autorize o acesso à localização para utilizar o GPS.'
+      );
+      return;
+    }
+
+    const posicao = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Balanced,
+    });
+
+    setLocal(
+      `${posicao.coords.latitude.toFixed(5)}, ${posicao.coords.longitude.toFixed(5)}`
+    );
+  } catch (error) {
+    Alert.alert(
+      'Erro de localização',
+      'Não foi possível obter sua localização. Tente novamente.'
+    );
+  } finally {
+    setBuscandoLocal(false);
+  }
+}
   const { id } = useLocalSearchParams<{ id?: string }>();
 
   const editando = Boolean(id);
